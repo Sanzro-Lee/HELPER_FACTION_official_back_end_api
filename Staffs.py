@@ -93,7 +93,7 @@ def search_all_staff():
 
 # 创建表
 def create_staff_table():
-    sql="""CREATE TABLE staff(id varchar(11) PRIMARY KEY, username varchar(20), password varchar(20)); """
+    sql="""CREATE TABLE staff(id varchar(11) PRIMARY KEY, username varchar(20), password varchar(50)); """
     try:
         cursor.execute(sql)
         print("staff table created successfully")
