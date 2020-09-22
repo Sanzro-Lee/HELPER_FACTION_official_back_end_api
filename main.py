@@ -53,15 +53,6 @@ async def root():
 # 数据库方法调用
 # close_database()
 
-# 登录接口
-@app.post("/login/")
-async def login(staff: FindStaff):
-    data = find_staff(staff.username, staff.password)
-    if not data:
-        return jsonable_encoder({"status": "no", "info": "登录失败"})
-    else:
-        return jsonable_encoder({"status": "ok", "info": "%s 登录成功" % staff.username, "session": staff.username})
-
 
 # 新增员工
 @app.post("/createstaff/")
