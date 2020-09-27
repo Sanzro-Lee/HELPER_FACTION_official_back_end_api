@@ -1,7 +1,8 @@
 import psycopg2
 
 # 获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
+conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1",
+                        port="5433")
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
 cursor = conn.cursor()
 
@@ -13,7 +14,6 @@ def create_staff(id: str, username: str, password: str):
     cursor.execute(idsql, idparams)
     conn.commit()
     rows = cursor.fetchall()
-    print(rows)
     if rows:
         return -1
     else:
@@ -76,7 +76,7 @@ def find_staff(username, password):
 # 查询所有员工
 def search_all_staff():
     # sql语句 建表
-    sql ="""SELECT * FROM staff;"""
+    sql = """SELECT * FROM staff;"""
     try:
         # 执行语句
         cursor.execute(sql)
@@ -93,7 +93,12 @@ def search_all_staff():
 
 # 创建表
 def create_staff_table():
-    sql="""CREATE TABLE staff(id varchar(11) PRIMARY KEY, username varchar(20), password varchar(50)); """
+    sql = """CREATE TABLE staff(
+                id varchar(11) PRIMARY KEY,
+                username varchar(20),
+                password varchar(50)
+            );
+    """
     try:
         cursor.execute(sql)
         print("staff table created successfully")
