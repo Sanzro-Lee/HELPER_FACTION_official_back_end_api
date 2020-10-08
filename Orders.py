@@ -19,7 +19,34 @@ def create_order(orderid: str, createuser: str, orderaddress: str, orderphonenum
     if rows:
         return -1
     else:
-        sql = """INSERT INTO orders (orderid, createuser, orderaddress, orderphonenum, createdate, starttime, endtime, ordertype, orderdesc, orderprice, orderrate, orderpic) VALUES ( %(orderid)s, %(createuser)s, %(orderaddress)s, %(orderphonenum)s, %(createdate)s, %(starttime)s, %(endtime)s, %(ordertype)s, %(orderdesc)s, %(orderprice)s, %(orderrate)s, %(orderpic)s)"""
+        sql = """
+        INSERT INTO orders (
+            orderid,
+            createuser,
+            orderaddress,
+            orderphonenum,
+            createdate,
+            starttime,
+            endtime,
+            ordertype,
+            orderdesc,
+            orderprice,
+            orderrate,
+            orderpic
+        ) VALUES (
+            %(orderid)s,
+            %(createuser)s,
+            %(orderaddress)s,
+            %(orderphonenum)s,
+            %(createdate)s,
+            %(starttime)s,
+            %(endtime)s,
+            %(ordertype)s,
+            %(orderdesc)s,
+            %(orderprice)s,
+            %(orderrate)s,
+            %(orderpic)s)
+        """
         params = {
             'orderid': orderid,
             'createuser': createuser,

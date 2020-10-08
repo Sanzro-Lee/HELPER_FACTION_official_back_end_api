@@ -36,6 +36,12 @@ app.add_middleware(
 )
 
 
+# 用户登录类
+class User(BaseModel):
+    jsCode: str = None
+    grantType: str = None
+
+
 # 创建员工类
 class Staff(BaseModel):
     id: str = None
@@ -70,58 +76,14 @@ async def root():
     return {"message": "Hello World"}
 
 
-# 新增员工
-@app.post("/createstaff/")
-async def createstaff(staff: Staff):
-    data = create_staff(staff.id, staff.username, staff.password)
-    return data
-
-
-# 删除员工
-@app.post("/deletestaff/")
-async def deletestaff(id):
-    data = delete_staff(id)
-    return data
-
-
-# 更改员工
-@app.post("/updatestaff/")
-async def updatestaff(staff: Staff):
-    data = update_staff(staff.id, staff.username, staff.password)
-    return data
-
-
-# 查找某个员工
-@app.post("/findstaff/")
-async def findstaff(staff: FindStaff):
-    data = find_staff(staff.username, staff.password)
-    jsonable_encoder({"status": "ok", "info": "%s登录成功" % staff.username, "session": staff.username})
-    return data
-
-
-# 查找所有员工
-@app.get("/searchallstaff")
-async def searchallstaff():
-    data = search_all_staff()
-    return data
-
-
-# 创建 staff（员工）表
-@app.get("/createstafftable")
-async def createstafftable():
-    data = create_staff_table()
-    return data
-
-
-# 关闭连接
-@app.get("/closestaffdb")
-async def closestaffdb():
-    data = close_database()
-    return data
+# 小程序 用户 登录
+@app.post("/mine/login")
+async def minelogin(data):
+    print(data)
 
 
 # 新建需求
-@app.post("/createorder")
+@app.post("/oerder/create")
 async def createorder(order: Order):
     data = create_order(
         order.orderid,
@@ -141,21 +103,71 @@ async def createorder(order: Order):
 
 
 # 查找特定需求
-@app.post("/findorder")
+@app.post("/order/find")
 async def findorder(orderid):
     data = find_order(orderid)
     return data
 
 
-# 查找所有员工
-@app.get("/searchallorder")
+# 查找所有需求
+@app.get("/order/searchall")
 async def searchallorder():
     data = search_all_order()
     return data
 
 
 # 新建需求表
-@app.get("/createordertable")
+@app.get("/order/createtable")
 async def createorderstatble():
     data = create_order_table()
+    return data
+
+
+# 新增员工
+@app.post("/staff/create")
+async def createstaff(staff: Staff):
+    data = create_staff(staff.id, staff.username, staff.password)
+    return data
+
+
+# 删除员工
+@app.post("/staff/delete")
+async def deletestaff(id):
+    data = delete_staff(id)
+    return data
+
+
+# 更改员工
+@app.post("/staff/update")
+async def updatestaff(staff: Staff):
+    data = update_staff(staff.id, staff.username, staff.password)
+    return data
+
+
+# 查找某个员工
+@app.post("/staff/find")
+async def findstaff(staff: FindStaff):
+    data = find_staff(staff.username, staff.password)
+    jsonable_encoder({"status": "ok", "info": "%s登录成功" % staff.username, "session": staff.username})
+    return data
+
+
+# 查找所有员工
+@app.get("/staff/searchall")
+async def searchallstaff():
+    data = search_all_staff()
+    return data
+
+
+# 创建 staff（员工）表
+@app.get("/staff/createtable")
+async def createstafftable():
+    data = create_staff_table()
+    return data
+
+
+# 关闭员工连接
+@app.get("/staff/closedb")
+async def closestaffdb():
+    data = close_database()
     return data
