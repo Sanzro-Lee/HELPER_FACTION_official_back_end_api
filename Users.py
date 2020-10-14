@@ -1,8 +1,8 @@
 import psycopg2
 
 # 本地端获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
-
+conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1",
+                        port="5433")
 # 服务器端获得链接
 # conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5432")
 
@@ -10,8 +10,8 @@ conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU
 cursor = conn.cursor()
 
 
-# 新建员工
-def create_staff(id: str, username: str, password: str):
+# 新建用户
+def create_user(id: str, username: str, password: str):
     idsql = """SELECT * FROM staff where id = %s"""
     idparams = (id,)
     cursor.execute(idsql, idparams)
@@ -31,8 +31,8 @@ def create_staff(id: str, username: str, password: str):
             conn.commit()
 
 
-# 删除员工
-def delete_staff(id: str):
+# 删除用户
+def delete_user(id: str):
     sql = """delete from  staff where id = %s  """
     params = (id,)
     try:
@@ -44,8 +44,8 @@ def delete_staff(id: str):
         conn.commit()
 
 
-# 更改员工
-def update_staff(id: str, username: str, password: str):
+# 更改用户
+def update_user(id: str, username: str, password: str):
     sql = """UPDATE staff set username = %s and password = %s where id = %s"""
     params = (username, password, id)
     try:
@@ -57,8 +57,8 @@ def update_staff(id: str, username: str, password: str):
         conn.commit()
 
 
-# 按条件查找员工
-def find_staff(username, password):
+# 按条件查找用户
+def find_user(username, password):
     # sql语句 建表
     sql = """SELECT * FROM staff where username = %s and password = %s;"""
     # 执行语句
@@ -76,8 +76,8 @@ def find_staff(username, password):
         conn.commit()
 
 
-# 查询所有员工
-def search_all_staff():
+# 查询所有用户
+def search_all_user():
     # sql语句 建表
     sql = """SELECT * FROM staff;"""
     try:
@@ -95,16 +95,17 @@ def search_all_staff():
 
 
 # 创建表
-def create_staff_table():
-    sql = """CREATE TABLE staff(
+def create_user_table():
+    sql = """CREATE TABLE user(
                 id varchar(11) PRIMARY KEY,
                 username varchar(20),
-                password varchar(50)
+                region varchar(3),
+                address varchar(30)
             );
     """
     try:
         cursor.execute(sql)
-        print("staff table created successfully")
+        print("user table created successfully")
         conn.commit()
     except Exception as e:
         conn.rollback()

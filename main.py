@@ -7,8 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 # 引入 Staffs.py 里面增删改查员工的方法
 from Staffs import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, \
     close_database
+
 # 引入 Orders.py 里面增删改查需求的方法
 from Orders import create_order_table, create_order, search_all_order, find_order
+
+# 微信小程序获取openid
+import json
+import requests
+# from WXBizDataCrypt import WXBizDataCrypt
+
 
 app = FastAPI()
 
@@ -171,3 +178,19 @@ async def createstafftable():
 async def closestaffdb():
     data = close_database()
     return data
+
+
+# 微信小程序获得openid
+@app.post('/api/code')
+def user_wxlogin(appid, secret, code):
+    params = {
+        'appid': appid,
+        'secret': secret,
+        'js_code': code,
+        'grant_type': 'authorization_code'
+    }
+    url = 'https://api.weixin.qq.com/sns/jscode2session'
+    r = requests.get(url, params=params)
+    openid = r.json().get('openid', '')
+    session_key = r.json().get('session_key', '')
+    return { 'openid': openid, 'session_key': session_key }

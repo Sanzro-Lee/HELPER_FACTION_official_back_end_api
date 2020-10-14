@@ -1,8 +1,11 @@
 import psycopg2
 
-# 获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1",
-                        port="5433")
+# 本地端获得链接
+conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
+
+# 服务器端获得链接
+# conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5432")
+
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
 cursor = conn.cursor()
 
