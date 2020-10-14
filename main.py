@@ -5,8 +5,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 # 引入 Staffs.py 里面增删改查员工的方法
-from Staffs import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, \
-    close_database
+from Staffs import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, close_database
 
 # 引入 Orders.py 里面增删改查需求的方法
 from Orders import create_order_table, create_order, search_all_order, find_order
@@ -14,6 +13,7 @@ from Orders import create_order_table, create_order, search_all_order, find_orde
 # 微信小程序获取openid
 import json
 import requests
+
 # 因小程序id为测试号，所以无法获得手机号，故注释此文件
 # from WXBizDataCrypt import WXBizDataCrypt
 
@@ -85,13 +85,13 @@ async def root():
 
 
 # 小程序 用户 登录
-@app.post("/mine/login")
+@app.post("/api/mine/login")
 async def minelogin(data):
     print(data)
 
 
 # 新建需求
-@app.post("/oerder/create")
+@app.post("/api/oerder/create")
 async def createorder(order: Order):
     data = create_order(
         order.orderid,
@@ -111,49 +111,49 @@ async def createorder(order: Order):
 
 
 # 查找特定需求
-@app.post("/order/find")
+@app.post("/api/order/find")
 async def findorder(orderid):
     data = find_order(orderid)
     return data
 
 
 # 查找所有需求
-@app.get("/order/searchall")
+@app.get("/api/order/searchall")
 async def searchallorder():
     data = search_all_order()
     return data
 
 
 # 新建需求表
-@app.get("/order/createtable")
+@app.get("/api/order/createtable")
 async def createorderstatble():
     data = create_order_table()
     return data
 
 
 # 新增员工
-@app.post("/staff/create")
+@app.post("/api/staff/create")
 async def createstaff(staff: Staff):
     data = create_staff(staff.id, staff.username, staff.password)
     return data
 
 
 # 删除员工
-@app.post("/staff/delete")
+@app.post("/api/staff/delete")
 async def deletestaff(id):
     data = delete_staff(id)
     return data
 
 
 # 更改员工
-@app.post("/staff/update")
+@app.post("/api/staff/update")
 async def updatestaff(staff: Staff):
     data = update_staff(staff.id, staff.username, staff.password)
     return data
 
 
 # 查找某个员工
-@app.post("/staff/find")
+@app.post("/api/staff/find")
 async def findstaff(staff: FindStaff):
     data = find_staff(staff.username, staff.password)
     jsonable_encoder({"status": "ok", "info": "%s登录成功" % staff.username, "session": staff.username})
@@ -161,21 +161,21 @@ async def findstaff(staff: FindStaff):
 
 
 # 查找所有员工
-@app.get("/staff/searchall")
+@app.get("/api/staff/searchall")
 async def searchallstaff():
     data = search_all_staff()
     return data
 
 
 # 创建 staff（员工）表
-@app.get("/staff/createtable")
+@app.get("/api/staff/createtable")
 async def createstafftable():
     data = create_staff_table()
     return data
 
 
 # 关闭员工连接
-@app.get("/staff/closedb")
+@app.get("/api/staff/closedb")
 async def closestaffdb():
     data = close_database()
     return data
