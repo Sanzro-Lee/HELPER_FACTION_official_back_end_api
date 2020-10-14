@@ -14,15 +14,16 @@ from Orders import create_order_table, create_order, search_all_order, find_orde
 # 微信小程序获取openid
 import json
 import requests
+# 因小程序id为测试号，所以无法获得手机号，故注释此文件
 # from WXBizDataCrypt import WXBizDataCrypt
 
 
-app = FastAPI()
-
-if __name__ == '__main__':
-    uvicorn.run(app=app)
-
-items = {"foo": "The Foo Wrestlers"}
+# 服务器端配置
+app = FastAPI(
+    openapi_url="/api/data_manger.json",
+    docs_url="/api/docs",
+    redoc_url="/api/redocs"
+)
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -193,4 +194,4 @@ def user_wxlogin(appid, secret, code):
     r = requests.get(url, params=params)
     openid = r.json().get('openid', '')
     session_key = r.json().get('session_key', '')
-    return { 'openid': openid, 'session_key': session_key }
+    return {'openid': openid, 'session_key': session_key}
