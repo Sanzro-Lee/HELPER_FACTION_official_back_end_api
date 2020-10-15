@@ -1,13 +1,9 @@
-import psycopg2
+# from DataBaseConfig import connlocal, cursor
+from DataBaseConfig import connserver, cursor
 
-# 本地端获得链接
-# conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
-
-# 服务器端获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5432")
-
+# conn = connlocal
+conn = connserver
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-cursor = conn.cursor()
 
 
 # 新建需求
@@ -139,7 +135,7 @@ def search_all_order():
 # 创建需求表
 def create_order_table():
     sql = """
-        CREATE TABLE orders(
+        CREATE TABLE IF NOT EXISTS orders(
             orderid varchar(18) PRIMARY KEY,
             createuser varchar(5) NOT NULL,
             orderaddress varchar(30) NOT NULL,
@@ -164,9 +160,3 @@ def create_order_table():
         conn.rollback()
     else:
         conn.commit()
-
-
-# 关闭数据库连接
-def close_database():
-    cursor.close()
-    conn.close()

@@ -1,14 +1,19 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 # 引入 Staffs.py 里面增删改查员工的方法
-from Staffs import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, close_database
+from Staffs import create_staff_table, create_staff, delete_staff, update_staff, find_staff, search_all_staff
 
 # 引入 Orders.py 里面增删改查需求的方法
-from Orders import create_order_table, create_order, search_all_order, find_order
+from Orders import create_order_table, create_order, find_order, search_all_order
+
+# 引入 Users.py 里面的增删改查用户的方法
+from Users import create_user_table, create_user, delete_user, update_user, find_user, search_all_user
+
+# 关闭数据库连接
+from DataBaseConfig import close_database
 
 # 微信小程序获取openid
 import json
@@ -44,10 +49,12 @@ app.add_middleware(
 )
 
 
-# 用户登录类
+# 创建用户类
 class User(BaseModel):
-    jsCode: str = None
-    grantType: str = None
+    openid: str = None
+    username: str = None
+    region: str = None
+    address: str = None
 
 
 # 创建员工类
@@ -84,10 +91,56 @@ async def root():
     return {"message": "Hello World"}
 
 
-# 小程序 用户 登录
-@app.post("/api/mine/login")
-async def minelogin(data):
-    print(data)
+# 新增特定用户
+@app.post("/api/user/create")
+async def createuser(user: User):
+    data = create_user(
+        user.openid,
+        user.username,
+        user.region,
+        user.address
+    )
+    return data
+
+
+# 删除特定用户
+@app.post("/api/user/delete")
+async def deleteuser(openid):
+    data = delete_user(openid)
+    return data
+
+
+# 修改特定用户
+@app.post("/api/user/update")
+async def updateuser(user: User):
+    data = update_user(
+        user.openid,
+        user.username,
+        user.region,
+        user.address
+    )
+    return data
+
+
+# 查找特定用户
+@app.post("/api/user/find")
+async def finduser(openid):
+    data = find_user(openid)
+    return data
+
+
+# 查找所有用户
+@app.get("/api/user/searchall")
+async def searchalluser():
+    data = search_all_user()
+    return data
+
+
+# 新建用户表
+@app.get("/api/user/createtable")
+async def createusertatble():
+    data = create_user_table()
+    return data
 
 
 # 新建需求
@@ -127,7 +180,7 @@ async def searchallorder():
 # 新建需求表
 @app.get("/api/order/createtable")
 async def createorderstatble():
-    data = create_order_table()
+    data = create_user_table()
     return data
 
 
@@ -174,9 +227,9 @@ async def createstafftable():
     return data
 
 
-# 关闭员工连接
-@app.get("/api/staff/closedb")
-async def closestaffdb():
+# 关闭数据库连接
+@app.get("/api/closedb")
+async def closedb():
     data = close_database()
     return data
 

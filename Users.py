@@ -1,27 +1,28 @@
-import psycopg2
+# from DataBaseConfig import connlocal, cursor
+from DataBaseConfig import connserver, cursor
 
-# 本地端获得链接
-# conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
-
-# 服务器端获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5432")
-
+# conn = connlocal
+conn = connserver
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-cursor = conn.cursor()
 
 
 # 新建用户
-def create_user(id: str, username: str, password: str):
-    idsql = """SELECT * FROM staff where id = %s"""
-    idparams = (id,)
+def create_user(openid: str, username: str, region: str, address: str):
+    idsql = """SELECT * FROM users where openid = %s"""
+    idparams = (openid,)
     cursor.execute(idsql, idparams)
     conn.commit()
     rows = cursor.fetchall()
     if rows:
         return -1
     else:
-        sql = """INSERT INTO staff (id, username, password) VALUES (%(id)s,%(username)s, %(password)s)"""
-        params = {'id': id, 'username': username, 'password': password}
+        sql = """INSERT INTO users (openid, username, region, address) VALUES (%(openid)s, %(username)s, %(region)s, %(address)s)"""
+        params = {
+            'openid': openid,
+            'username': username,
+            'region': region,
+            'address': address
+        }
         try:
             cursor.execute(sql, params)
             conn.commit()
@@ -32,9 +33,9 @@ def create_user(id: str, username: str, password: str):
 
 
 # 删除用户
-def delete_user(id: str):
-    sql = """delete from  staff where id = %s  """
-    params = (id,)
+def delete_user(openid: str):
+    sql = """delete from users where openid = %s"""
+    params = (openid,)
     try:
         cursor.execute(sql, params)
         conn.commit()
@@ -45,9 +46,14 @@ def delete_user(id: str):
 
 
 # 更改用户
-def update_user(id: str, username: str, password: str):
-    sql = """UPDATE staff set username = %s and password = %s where id = %s"""
-    params = (username, password, id)
+def update_user(openid: str, username: str, region: str, address: str):
+    sql = """UPDATE users SET username=%(username)s, address=%(address)s, region=%(region)s WHERE openid=%(openid)s"""
+    params = {
+        "username": username,
+        "address": address,
+        "region": region,
+        "openid": openid
+    }
     try:
         cursor.execute(sql, params)
         conn.commit()
@@ -58,11 +64,12 @@ def update_user(id: str, username: str, password: str):
 
 
 # 按条件查找用户
-def find_user(username, password):
+def find_user(openid):
     # sql语句 建表
-    sql = """SELECT * FROM staff where username = %s and password = %s;"""
+    sql = """SELECT * FROM users where openid = %s;"""
     # 执行语句
-    params = (username, password)
+    # params = (username, address)
+    params = (openid,)
     try:
         cursor.execute(sql, params)
         # 抓取
@@ -79,7 +86,7 @@ def find_user(username, password):
 # 查询所有用户
 def search_all_user():
     # sql语句 建表
-    sql = """SELECT * FROM staff;"""
+    sql = """SELECT * FROM users;"""
     try:
         # 执行语句
         cursor.execute(sql)
@@ -96,12 +103,13 @@ def search_all_user():
 
 # 创建表
 def create_user_table():
-    sql = """CREATE TABLE user(
-                id varchar(11) PRIMARY KEY,
-                username varchar(20),
-                region varchar(3),
-                address varchar(30)
-            );
+    sql = """
+        CREATE TABLE users(
+            openid varchar(30) PRIMARY KEY,
+            username varchar(10),
+            region varchar(5),
+            address varchar(30)
+        );
     """
     try:
         cursor.execute(sql)
@@ -111,9 +119,3 @@ def create_user_table():
         conn.rollback()
     else:
         conn.commit()
-
-
-# 关闭数据库连接
-def close_database():
-    cursor.close()
-    conn.close()

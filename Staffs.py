@@ -1,13 +1,9 @@
-import psycopg2
+# from DataBaseConfig import connlocal, cursor
+from DataBaseConfig import connserver, cursor
 
-# 本地端获得链接
-# conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5433")
-
-# 服务器端获得链接
-conn = psycopg2.connect(database="postgres", user="postgres", password="S@,|RhfU($Q&_c6FkNy[", host="127.0.0.1", port="5432")
-
+# conn = connlocal
+conn = connserver
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-cursor = conn.cursor()
 
 
 # 新建员工
@@ -17,6 +13,7 @@ def create_staff(id: str, username: str, password: str):
     cursor.execute(idsql, idparams)
     conn.commit()
     rows = cursor.fetchall()
+    print(rows)
     if rows:
         return -1
     else:
@@ -94,9 +91,9 @@ def search_all_staff():
         conn.commit()
 
 
-# 创建表
+# 创建员工表
 def create_staff_table():
-    sql = """CREATE TABLE staff(
+    sql = """CREATE TABLE IF NOT EXISTS staff(
                 id varchar(11) PRIMARY KEY,
                 username varchar(20),
                 password varchar(50)
@@ -110,9 +107,3 @@ def create_staff_table():
         conn.rollback()
     else:
         conn.commit()
-
-
-# 关闭数据库连接
-def close_database():
-    cursor.close()
-    conn.close()
