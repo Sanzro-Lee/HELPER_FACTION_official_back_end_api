@@ -106,8 +106,8 @@ def create_user_table():
     sql = """
         CREATE TABLE users(
             openid varchar(30) PRIMARY KEY,
-            username varchar(10),
-            region varchar(5),
+            username varchar(20),
+            region varchar(10),
             address varchar(30)
         );
     """
