@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    叫到帮官方后端接口系统，使用了 CentOS + Docker + Nginx + Anaconda + Fastapi + PostgreSQL，不适配移动端竖版，适配移动端横版。<br>
+    叫到帮官方后端接口系统，使用了 CentOS + Docker + Nginx + Anaconda + Fastapi + PostgreSQL，RESTful API 所有前端皆可访问。<br>
     所需配置 & 环境配置：https://juejin.im/post/6884113599644729351/
 </p>
 
