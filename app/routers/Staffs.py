@@ -11,7 +11,7 @@
 
 from fastapi import APIRouter
 # 员工类，用于校验数据
-from ..utils.custom_model import Staff, FindStaff
+from app.utils.custom_model import Staff, FindStaff
 # from app.routers.DataBaseConfig import connlocal, cursor
 
 from app.routers.DataBaseConfig import connserver, cursor

@@ -11,7 +11,7 @@
 
 from fastapi import APIRouter
 # 需求类，用于校验数据
-from ..utils.custom_model import Order
+from app.utils.custom_model import Order
 # from app.routers.DataBaseConfig import connlocal, cursor
 
 from app.routers.DataBaseConfig import connserver, cursor
