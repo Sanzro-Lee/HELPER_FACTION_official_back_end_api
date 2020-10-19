@@ -11,7 +11,6 @@
 
 from fastapi import APIRouter
 # 微信小程序获取openid
-# import json
 import requests
 
 # 因小程序id为测试号，所以无法获得手机号，故注释此文件

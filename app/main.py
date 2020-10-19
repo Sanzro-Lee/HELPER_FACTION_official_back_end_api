@@ -10,7 +10,7 @@
 """
 
 from fastapi import FastAPI
-from .router import Orders, DataBaseConfig, MiniProgremCode, Users, Staffs
+from app.router import Orders, DataBaseConfig, MiniProgremCode, Users, Staffs
 from fastapi.middleware.cors import CORSMiddleware
 
 # 服务器端配置

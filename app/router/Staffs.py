@@ -12,15 +12,10 @@
 from fastapi import APIRouter
 # 员工类，用于校验数据
 from app.utils.custom_model import Staff, FindStaff
-# from app.routers.DataBaseConfig import connlocal, cursor
-
-from app.router.DataBaseConfig import connserver, cursor
+# 获得游标对象，一个游标对象可以对数据库进行执行操作
+from app.router.DataBaseConfig import conn, cursor
 
 router = APIRouter()
-# conn = connlocal
-
-# 获得游标对象，一个游标对象可以对数据库进行执行操作
-conn = connserver
 
 
 # 创建员工表
@@ -40,8 +35,6 @@ async def create_staff_table():
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 新建员工
@@ -65,8 +58,6 @@ async def create_staff(staff: Staff):
         except Exception as e:
             data = conn.rollback()
             return data
-        else:
-            conn.commit()
 
 
 # 删除员工
@@ -81,8 +72,6 @@ async def delete_staff(id: str):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 更新员工信息
@@ -97,8 +86,6 @@ async def update_staff(staff: Staff):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 查找特定员工
@@ -118,8 +105,6 @@ async def find_staff(staff: FindStaff):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 查询所有员工
@@ -138,5 +123,3 @@ async def search_all_staff():
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()

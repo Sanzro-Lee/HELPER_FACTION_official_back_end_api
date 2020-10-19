@@ -12,18 +12,10 @@
 from fastapi import APIRouter
 # 需求类，用于校验数据
 from app.utils.custom_model import Order
-# from app.routers.DataBaseConfig import connlocal, cursor
-
-from app.router.DataBaseConfig import connserver, cursor
+# 获得游标对象，一个游标对象可以对数据库进行执行操作
+from app.router.DataBaseConfig import conn, cursor
 
 router = APIRouter()
-# conn = connlocal
-
-
-conn = connserver
-
-
-# 获得游标对象，一个游标对象可以对数据库进行执行操作
 
 
 # 创建需求表
@@ -54,8 +46,6 @@ async def create_order_table():
         return data
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 新建需求
@@ -118,8 +108,6 @@ async def create_order(order: Order):
         return data
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 删除需求
@@ -133,8 +121,6 @@ async def delete_order(orderid: str):
         return data
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 更新需求信息
@@ -148,8 +134,6 @@ def update_order(orderid: str, username: str, password: str):
         return data
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 查找特定需求
@@ -168,8 +152,6 @@ def find_order(orderid: str):
         return rows
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 查询所有需求
@@ -187,5 +169,3 @@ async def search_all_order():
         return rows
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
