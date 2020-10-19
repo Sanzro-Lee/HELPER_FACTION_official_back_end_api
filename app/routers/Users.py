@@ -13,10 +13,9 @@ from fastapi import APIRouter
 # 用户类，用于校验数据
 from app.utils.custom_model import User
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from app.router.DataBaseConfig import conn, cursor
+from app.routers.DataBaseConfig import conn, cursor
 
 router = APIRouter()
-
 
 
 # 创建用户表
@@ -36,8 +35,6 @@ def create_user_table():
         conn.commit()
     except Exception as e:
         conn.rollback()
-    else:
-        conn.commit()
 
 
 # 新建用户
@@ -66,8 +63,6 @@ async def create_user(user: User):
         except Exception as e:
             data = conn.rollback()
             return data
-        else:
-            conn.commit()
 
 
 # 删除用户
@@ -82,8 +77,6 @@ async def delete_user(openid: str):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 更改用户
@@ -104,8 +97,6 @@ async def update_user(user: User):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 按条件查找用户
@@ -126,8 +117,6 @@ def find_user(openid):
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()
 
 
 # 查询所有用户
@@ -146,5 +135,3 @@ def search_all_user():
     except Exception as e:
         data = conn.rollback()
         return data
-    else:
-        conn.commit()

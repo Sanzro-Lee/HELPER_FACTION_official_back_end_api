@@ -13,7 +13,7 @@ from fastapi import APIRouter
 # 需求类，用于校验数据
 from app.utils.custom_model import Order
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from app.router.DataBaseConfig import conn, cursor
+from app.routers.DataBaseConfig import conn, cursor
 
 router = APIRouter()
 
