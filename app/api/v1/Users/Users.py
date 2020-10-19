@@ -9,11 +9,14 @@
 用户数据交互
 """
 
+import sys
+sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/')
+sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/api/v1/')
 from fastapi import APIRouter
 # 用户类，用于校验数据
-from app.utils.custom_model import User
+from utils.custom_model import User
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from app.api.v1.DataBaseConfig.DataBaseConfig import conn, cursor
+from DataBaseConfig.DataBaseConfig import conn, cursor
 
 router = APIRouter()
 
