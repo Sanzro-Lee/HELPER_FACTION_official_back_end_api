@@ -14,7 +14,7 @@ from fastapi import APIRouter
 from app.utils.custom_model import Staff, FindStaff
 # from app.routers.DataBaseConfig import connlocal, cursor
 
-from app.routers.DataBaseConfig import connserver, cursor
+from app.router.DataBaseConfig import connserver, cursor
 
 router = APIRouter()
 # conn = connlocal
