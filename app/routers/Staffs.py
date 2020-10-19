@@ -12,16 +12,15 @@
 from fastapi import APIRouter
 # 员工类，用于校验数据
 from ..utils.custom_model import Staff, FindStaff
-from app.routers.DataBaseConfig import connlocal, cursor
+# from app.routers.DataBaseConfig import connlocal, cursor
 
-# from DataBaseConfig import connserver, cursor
+from app.routers.DataBaseConfig import connserver, cursor
 
 router = APIRouter()
-conn = connlocal
+# conn = connlocal
 
-
-# conn = connserver
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
+conn = connserver
 
 
 # 创建员工表
