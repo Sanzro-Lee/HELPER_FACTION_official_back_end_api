@@ -10,8 +10,12 @@
 """
 
 from fastapi import FastAPI
-from .routers import Users, Orders, Staffs, DataBaseConfig, MiniProgremCode
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.v1.Users import Users
+from app.api.v1.Orders import Orders
+from app.api.v1.Staffs import Staffs
+from app.api.v1.DataBaseConfig import DataBaseConfig
+from app.api.v1.MiniProgremCode import MiniProgremCode
 
 # 服务器端配置
 app = FastAPI(

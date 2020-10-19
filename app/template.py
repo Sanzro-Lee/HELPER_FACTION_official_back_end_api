@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.Staffs import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, close_database
+from app import create_staff, delete_staff, update_staff, find_staff, search_all_staff, create_staff_table, close_database
 
 app = FastAPI()
 
