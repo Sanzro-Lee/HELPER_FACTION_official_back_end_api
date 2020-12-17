@@ -35,6 +35,9 @@ uvicorn main:app --reload
 
 # 服务器 Dokcer 容器内启动：
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# 服务器上的路径是：
+/var/lib/docker/overlay2/5d8ea21396cac2922cc3fb5c6e8f291b3065559193237dd58c754b38f4008fde/diff/tmp/HELPER_FACTION_official_back_end_api
 ```
 
 
