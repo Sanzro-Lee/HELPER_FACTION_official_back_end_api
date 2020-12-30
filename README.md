@@ -6,7 +6,7 @@
 
 <p align="center">
     叫到帮官方后端接口系统，使用了 CentOS + Docker + Nginx + Anaconda + Fastapi + PostgreSQL，RESTful API 所有前端皆可访问。<br>
-    简明环境配置：https://sanzrolee.gitbook.io/helper-faction-apis/<br>
+    环境配置：https://sanzrolee.gitbook.io/helper-faction-apis/<br>
     内网可访问（配置）：https://juejin.im/post/6884113599644729351/
 </p>
 
@@ -27,7 +27,7 @@
 ## 运行使用
 
 ```bash
-# 如果已经按照上面👆 所需配置 & 环境配置链接🔗配置好，则可以运行下面👇 的命令
+# 如果已经按照上面👆 环境配置链接🔗 配置好，则可以运行下面👇 的命令
 # 如果不想配置那么麻烦，安装完 Python > 3.7 & PostgreSQL 12 后
 # 直接 pip install fastapi uvicorn psycopg2，就可以运行下面👇 的命令了
 
@@ -37,8 +37,7 @@ uvicorn main:app --reload
 # 服务器 Dokcer 容器内启动：
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-# 服务器上的路径是：
-/var/lib/docker/overlay2/5d8ea21396cac2922cc3fb5c6e8f291b3065559193237dd58c754b38f4008fde/diff/tmp/HELPER_FACTION_official_back_end_api
+# 服务器上的路径是：先进入 Docker 容器，再去 /tmp/ 就能找到 HELPER_FACTION_official_back_end_api
 ```
 
 
