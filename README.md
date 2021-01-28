@@ -40,9 +40,9 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 # 服务器上的路径是：先进入 Docker 容器，再去 /tmp/ 就能找到 HELPER_FACTION_official_back_end_api
 ```
 
-## 设计图展示
+## 实际演示图
 
-<img alt="设计图展示" src="https://raw.githubusercontent.com/Sanzro-Lee/HELPER_FACTION_official_website/master/images/Background%20Management%20System%20Demo.png" width="auto">
+<img alt="实机演示图" src="https://raw.githubusercontent.com/Sanzro-Lee/HELPER_FACTION_official_website/master/images/Background%20Management%20System%20Demo.png" width="auto">
 
 <!-- ## 文档
 https://helperfaction.github.io/docs -->
