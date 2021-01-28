@@ -8,11 +8,8 @@
 
 ## 宿主机中需要做的配置🧾 <a id="su-zhu-ji-zhong-xu-yao-zuo-de-pei-zhi-1"></a>
 
+* [安装 & 配置 Docker](su-zhu-ji-zhong-xu-yao-zuo-de-pei-zhi-1/an-zhuang-pei-zhi-docker.md)
 * [安装 & 配置 Nginx](su-zhu-ji-zhong-xu-yao-zuo-de-pei-zhi-1/an-zhuang-pei-zhi-nginx.md)
-
----
-
-* [安装 & 配置 Docker](an-zhuang-pei-zhi-docker.md)
 
 ## 容器内的CentOS需要做的配置🧾
 
