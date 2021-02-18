@@ -14,9 +14,13 @@ sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/')
 sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/api/v1/')
 from fastapi import APIRouter
 # 需求类，用于校验数据
-from utils.custom_model import Order
+# from utils.custom_model import Order
+from app.utils.custom_model import Order
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from DataBaseConfig.DataBaseConfig import conn, cursor
+# from DataBaseConfig.DataBaseConfig import conn, cursor
+from app.api.v1.DataBaseConfig.DataBaseConfig import conn, cursor
+# from Pictures.Pictures import upload_picture
+from ..Pictures.Pictures import upload_picture
 
 router = APIRouter()
 
@@ -27,7 +31,9 @@ async def create_order_table():
     sql = """
         CREATE TABLE IF NOT EXISTS orders(
             orderid varchar(18) PRIMARY KEY,
-            createuser varchar(5) NOT NULL,
+            createuser varchar(8) NOT NULL,
+            latitude decimal NOT NULL,
+            longitude decimal NOT NULL,
             orderaddress varchar(30) NOT NULL,
             orderphonenum varchar(11) NOT NULL,
             taskmaster varchar(5),
@@ -39,16 +45,16 @@ async def create_order_table():
             orderdesc varchar(20) NOT NULL,
             orderprice decimal NOT NULL,
             orderrate decimal,
-            orderpic varchar NOT NULL
+            orderpic TEXT[] NOT NULL
         );
     """
     try:
-        data = cursor.execute(sql)
+        cursor.execute(sql)
         print("order table created successfully")
         conn.commit()
-        return data
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err
 
 
 # 新建需求
@@ -60,15 +66,19 @@ async def create_order(order: Order):
     conn.commit()
     rows = cursor.fetchall()
     print(rows)
-    if rows:
-        return -1
-    else:
-        sql = """
+    # if rows:
+    #     return -1
+    # else:
+    sql = """
         INSERT INTO orders (
             orderid,
             createuser,
+            latitude,
+            longitude,
             orderaddress,
             orderphonenum,
+            taskmaster,
+            masterphonenum,
             createdate,
             starttime,
             endtime,
@@ -80,8 +90,12 @@ async def create_order(order: Order):
         ) VALUES (
             %(orderid)s,
             %(createuser)s,
+            %(latitude)s,
+            %(longitude)s,
             %(orderaddress)s,
             %(orderphonenum)s,
+            %(taskmaster)s,
+            %(masterphonenum)s,
             %(createdate)s,
             %(starttime)s,
             %(endtime)s,
@@ -90,27 +104,32 @@ async def create_order(order: Order):
             %(orderprice)s,
             %(orderrate)s,
             %(orderpic)s)
-        """
-        params = {
-            'orderid': order.orderid,
-            'createuser': order.createuser,
-            'orderaddress': order.orderaddress,
-            'orderphonenum': order.orderphonenum,
-            'createdate': order.createdate,
-            'starttime': order.starttime,
-            'endtime': order.endtime,
-            'ordertype': order.ordertype,
-            'orderdesc': order.orderdesc,
-            'orderprice': order.orderprice,
-            'orderrate': order.orderrate,
-            'orderpic': order.orderpic,
-        }
-    try:
-        data = cursor.execute(sql, params)
-        conn.commit()
-        return data
-    except Exception as e:
-        conn.rollback()
+    """
+    params = {
+        'orderid': order.orderid,
+        'createuser': order.createuser,
+        'latitude': order.latitude,
+        'longitude': order.longitude,
+        'orderaddress': order.orderaddress,
+        'orderphonenum': order.orderphonenum,
+        'taskmaster': order.taskmaster,
+        'masterphonenum': order.masterphonenum,
+        'createdate': order.createdate,
+        'starttime': order.starttime,
+        'endtime': order.endtime,
+        'ordertype': order.ordertype,
+        'orderdesc': order.orderdesc,
+        'orderprice': order.orderprice,
+        'orderrate': order.orderrate,
+        'orderpic': order.orderpic,
+    }
+    print(params)
+    # try:
+    cursor.execute(sql, params)
+    conn.commit()
+    # except Exception as err:
+    #     conn.rollback()
+    #     return err
 
 
 # 删除需求
@@ -119,11 +138,11 @@ async def delete_order(orderid: str):
     sql = """delete from  orders where orderid = %s  """
     params = (orderid,)
     try:
-        data = cursor.execute(sql, params)
+        cursor.execute(sql, params)
         conn.commit()
-        return data
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err
 
 
 # 更新需求信息
@@ -132,11 +151,11 @@ def update_order(orderid: str, username: str, password: str):
     sql = """UPDATE orders set username = %s and password = %s where orderid = %s"""
     params = (username, password, orderid)
     try:
-        data = cursor.execute(sql, params)
+        cursor.execute(sql, params)
         conn.commit()
-        return data
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err
 
 
 # 查找特定需求
@@ -153,8 +172,9 @@ def find_order(orderid: str):
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err
 
 
 # 查询所有需求
@@ -170,5 +190,6 @@ async def search_all_order():
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err

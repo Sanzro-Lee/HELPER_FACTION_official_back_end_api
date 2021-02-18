@@ -8,15 +8,17 @@
 """
 员工数据交互
 """
+
 import sys
 sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/')
 sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/api/v1/')
 from fastapi import APIRouter
 # 员工类，用于校验数据
-from utils.custom_model import Staff, FindStaff
+# from utils.custom_model import Staff, FindStaff
+from app.utils.custom_model import Staff, FindStaff
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from DataBaseConfig.DataBaseConfig import conn, cursor
-
+# from DataBaseConfig.DataBaseConfig import conn, cursor
+from app.api.v1.DataBaseConfig.DataBaseConfig import conn, cursor
 router = APIRouter()
 
 
@@ -34,9 +36,9 @@ async def create_staff_table():
         print("staff table created successfully")
         conn.commit()
         return data
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 新建员工
@@ -57,9 +59,9 @@ async def create_staff(staff: Staff):
             data = cursor.execute(sql, params)
             conn.commit()
             return data
-        except Exception as e:
-            data = conn.rollback()
-            return data
+        except Exception as err:
+            conn.rollback()
+            return err
 
 
 # 删除员工
@@ -71,9 +73,9 @@ async def delete_staff(id: str):
         data = cursor.execute(sql, params)
         conn.commit()
         return data
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 更新员工信息
@@ -85,9 +87,9 @@ async def update_staff(staff: Staff):
         data = cursor.execute(sql, params)
         conn.commit()
         return data
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 查找特定员工
@@ -104,9 +106,9 @@ async def find_staff(staff: FindStaff):
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 查询所有员工
@@ -122,6 +124,6 @@ async def search_all_staff():
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err

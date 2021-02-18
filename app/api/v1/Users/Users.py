@@ -14,9 +14,11 @@ sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/')
 sys.path.insert(0, '/tmp/HELPER_FACTION_official_back_end_api/app/api/v1/')
 from fastapi import APIRouter
 # 用户类，用于校验数据
-from utils.custom_model import User
+# from utils.custom_model import User
+from app.utils.custom_model import User
 # 获得游标对象，一个游标对象可以对数据库进行执行操作
-from DataBaseConfig.DataBaseConfig import conn, cursor
+# from DataBaseConfig.DataBaseConfig import conn, cursor
+from app.api.v1.DataBaseConfig.DataBaseConfig import conn, cursor
 
 router = APIRouter()
 
@@ -36,8 +38,9 @@ def create_user_table():
         cursor.execute(sql)
         print("user table created successfully")
         conn.commit()
-    except Exception as e:
+    except Exception as err:
         conn.rollback()
+        return err
 
 
 # 新建用户
@@ -60,12 +63,11 @@ async def create_user(user: User):
             'address': user.address
         }
         try:
-            data = cursor.execute(sql, params)
+            cursor.execute(sql, params)
             conn.commit()
-            return data
-        except Exception as e:
-            data = conn.rollback()
-            return data
+        except Exception as err:
+            conn.rollback()
+            return err
 
 
 # 删除用户
@@ -77,9 +79,9 @@ async def delete_user(openid: str):
         data = cursor.execute(sql, params)
         conn.commit()
         return data
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 更改用户
@@ -97,9 +99,9 @@ async def update_user(user: User):
         data = cursor.execute(sql, params)
         conn.commit()
         return data
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 按条件查找用户
@@ -117,9 +119,9 @@ def find_user(openid):
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err
 
 
 # 查询所有用户
@@ -135,6 +137,6 @@ def search_all_user():
         # 事物提交
         conn.commit()
         return rows
-    except Exception as e:
-        data = conn.rollback()
-        return data
+    except Exception as err:
+        conn.rollback()
+        return err

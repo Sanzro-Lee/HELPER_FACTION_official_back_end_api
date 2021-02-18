@@ -9,6 +9,7 @@
 自定义类
 """
 
+import uuid
 from pydantic import BaseModel
 
 
@@ -35,10 +36,14 @@ class FindStaff(BaseModel):
 
 # 创建需求类
 class Order(BaseModel):
-    orderid: str = None
+    orderid: str = uuid.uuid1()
     createuser: str = None
+    latitude: str = None
+    longitude: str = None
     orderaddress: str = None
     orderphonenum: str = None
+    taskmaster: str = None
+    masterphonenum: str = None
     createdate: str = None
     starttime: str = None
     endtime: str = None
@@ -46,4 +51,4 @@ class Order(BaseModel):
     orderdesc: str = None
     orderprice: float = None
     orderrate: float = None
-    orderpic: str = None
+    orderpic: list = None
