@@ -10,7 +10,7 @@ idna==2.10
 Naked==0.1.31
 psycopg2 @ file:///opt/concourse/worker/volumes/live/ad562067-300d-4e37-4f54-3b1ac8fa91bd/volume/psycopg2_1608147599750/work
 pycparser==2.20
-pydantic==1.7.3
+pydantic==1.7.4
 pyOpenSSL==20.0.1
 PyYAML==5.4
 requests==2.31.0
