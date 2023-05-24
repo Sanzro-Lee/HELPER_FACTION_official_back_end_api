@@ -12,7 +12,7 @@ psycopg2 @ file:///opt/concourse/worker/volumes/live/ad562067-300d-4e37-4f54-3b1
 pycparser==2.20
 pydantic==1.7.3
 pyOpenSSL==20.0.1
-PyYAML==5.3.1
+PyYAML==5.4
 requests==2.25.1
 shellescape==3.8.1
 six==1.15.0
