@@ -13,7 +13,7 @@ pycparser==2.20
 pydantic==1.7.3
 pyOpenSSL==20.0.1
 PyYAML==5.4
-requests==2.25.1
+requests==2.31.0
 shellescape==3.8.1
 six==1.15.0
 starlette==0.27.0
